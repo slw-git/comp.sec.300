@@ -1,5 +1,6 @@
 /CMakeLists.txt
 /L1/t1
+/L1/t2.exe
 /.idea/
 /cmake-build-debug/
 /cmake-build-release/
