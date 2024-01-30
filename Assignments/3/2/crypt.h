@@ -20,7 +20,7 @@ Please notice to use random salt.
 void ping();
     
 int generateRandomSalt(char*);    
-int generateRandomSaltedAndHashedPW(char *userPWHash);
+int generateRandomSaltedAndHashedPW(char *userPW, char *hashOut);
 int checkRandomSaltedAndHashedPW(char *userPW, char *salt, char *hash);
 
 #endif

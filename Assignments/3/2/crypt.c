@@ -26,39 +26,32 @@ void ping() {
     puts("Ping from crypt.c");
 }
 
-int generateRandomSaltedAndHashedPW(char *userPW) {
+int generateRandomSaltedAndHashedPW(char *userPW, char *hash) {
 
     int pwLen = strlen(userPW);
     char salt[KEY_LEN];
     char saltedPW[KEY_LEN+pwLen];
     char *hashedSaltedPW;
 
-    size_t i;
-    unsigned char *out;
-    const char pwd[] = "password";
-    unsigned char salt_value[] = {'s','a','l','t'};
-
-    out = (unsigned char *) malloc(sizeof(unsigned char) * KEK_KEY_LEN);
+    // size_t i;
+    // unsigned char *out;
+    // out = (unsigned char *) malloc(sizeof(unsigned char) * KEK_KEY_LEN);
 
     // 1) Generate random salt
     int grslt = generateRandomSalt(salt);    
 
     // 2) Append salt + pw = sltpw
-    strcpy(saltedPW, userPW);
-    strcat(saltedPW, salt);
+    strcpy(saltedPW, salt);
+    strcat(saltedPW, userPW);
 
-    if( PKCS5_PBKDF2_HMAC_SHA1(pwd, strlen(pwd),
-        salt_value, sizeof(salt_value), 
-        ITERATION, KEK_KEY_LEN, out) != 0 )
-    {
-        printf("out: "); for(i=0;i<KEK_KEY_LEN;i++) { printf("%02x", out[i]); } printf("\n");
-    }
-    else
+    if(! PKCS5_PBKDF2_HMAC_SHA1(userPW, strlen(userPW),
+        saltedPW, sizeof(saltedPW), 
+        ITERATION, KEY_LEN, hash) != 0 )
     {
         fprintf(stderr, "PKCS5_PBKDF2_HMAC_SHA1 failed\n");
     }
  
-    free(out);
+    // free(out);
 
     // 3) Hash (salpw)
     /*

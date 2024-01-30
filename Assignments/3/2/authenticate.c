@@ -24,6 +24,8 @@ int test();
 
 int main(int argc, char **argv) {
 
+
+
     switch(argc){
         case 1:
         case 2:
@@ -31,10 +33,12 @@ int main(int argc, char **argv) {
             printUsage();
             break;
         case 4:
-            puts("Main!");
-            ping();
-            printf("Key: <%d>\n", generateRandomSaltedAndHashedPW(argv[2]));
-            test();
+            char hash[KEK_KEY_LEN];
+            buildUserPWRow(argv[1], argv[2]);
+            // printf("Hash <%s>", hash);
+            // generateRandomSaltedAndHashedPW(argv[2], hash);
+            // printf("Hash: <%d>\n", generateRandomSaltedAndHashedPW(argv[2]));
+            // test();
             break;
         default:
             printUsage();
@@ -43,7 +47,6 @@ int main(int argc, char **argv) {
     }
 
     return 0;    
-
 }
 
 /// @brief Prints out error messages

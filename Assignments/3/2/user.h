@@ -24,5 +24,6 @@ struct USER {
 } ;
 
 int addUser(char *userName, char *salt, FILE *db);
+void buildUserPWRow(char *userName, char *userPW);
 
 #endif
